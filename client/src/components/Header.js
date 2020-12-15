@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.nav`
@@ -6,7 +6,7 @@ const Container = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: gray;
+  background: ${({ url }) => (url === '/' ? 'none' : 'gray')};
   padding: 0 2% 0 2%;
 `;
 
@@ -17,8 +17,10 @@ const List = styled.ul`
 `;
 
 function Header() {
+  const location = useLocation();
+
   return (
-    <Container>
+    <Container url={location.pathname}>
       <h2>Shopping Tracking List</h2>
       <List>
         <li>
