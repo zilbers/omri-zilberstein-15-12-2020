@@ -2,12 +2,20 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './pages/List';
 import Received from './pages/Received';
 import Home from './pages/Home';
-import Header from './components/Header';
+import Header from './components/AppBar';
+import styled from 'styled-components';
+import bg from './assets/bg-image.jpg';
+
+const AppContainer = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background-image: url(${bg});
+`;
 
 function App() {
   return (
     <Router>
-      <div className='App'>
+      <AppContainer>
         <Header />
         <Switch>
           <Route exact path='/list'>
@@ -20,7 +28,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
-      </div>
+      </AppContainer>
     </Router>
   );
 }
