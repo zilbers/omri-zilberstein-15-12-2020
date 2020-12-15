@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './pages/List';
 import Received from './pages/Received';
@@ -12,10 +13,26 @@ const AppContainer = styled.div`
   background-image: url(${bg});
 `;
 
+const Shadow = styled.div`
+  position: absolute;
+  background: black;
+  opacity: 0.6;
+  height: 100vh;
+  width: 100vw;
+`;
+
 function App() {
+  const [orders, setOrders] = React.useState([]);
+  const [show, setShow] = React.useState(false);
+
+  const handleModal = () => {
+    setShow((prev) => !prev);
+  };
+
   return (
     <Router>
       <AppContainer>
+        {show && <Shadow />}
         <Header />
         <Switch>
           <Route exact path='/list'>
@@ -25,7 +42,7 @@ function App() {
             <Received />
           </Route>
           <Route exact path='/'>
-            <Home />
+            <Home orders={orders} show={show} handleModal={handleModal} />
           </Route>
         </Switch>
       </AppContainer>

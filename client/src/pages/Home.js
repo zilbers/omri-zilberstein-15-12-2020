@@ -1,6 +1,8 @@
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
+import Modal from '../components/Modal';
+import { useHistory } from 'react-router-dom';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -10,6 +12,7 @@ const HomeContainer = styled.div`
 `;
 
 const CardsContainer = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -17,17 +20,48 @@ const CardsContainer = styled.div`
   justify-content: center;
 `;
 
-function Home() {
+function Home({ orders, show, handleModal }) {
   const history = useHistory();
 
   return (
     <HomeContainer>
       <h1>Home</h1>
       <CardsContainer>
-        <Card grow={1} title='test' content='test' />
-        <Card grow={1} title='test' content='test' />
+        {orders.length > 0 ? (
+          <>
+            <Card
+              grow={1}
+              title='Your tracking list'
+              content='See your waiting list'
+              onClick={() => history.push('/list')}
+            />
+            <Card
+              grow={1}
+              title='Received'
+              content='See the history of your orders'
+              onClick={() => history.push('/received')}
+            />
+          </>
+        ) : (
+          <>
+            {!show && (
+              <Card
+                grow={1}
+                title='Get Started'
+                content='Add an item to your waiting list'
+                onClick={handleModal}
+              />
+            )}
+            <Modal show={show} handleModal={handleModal}>
+              <h2>Modal</h2>
+              <p className='content'>Lorem ipsum</p>
+              <div className='actions'>
+                <button onClick={handleModal}>Close</button>
+              </div>
+            </Modal>
+          </>
+        )}
       </CardsContainer>
-      <button onClick={() => history.push('/list')}>Start</button>
     </HomeContainer>
   );
 }
