@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
 import Modal from '../components/Modal';
+import Form from '../components/Form';
 import { useHistory } from 'react-router-dom';
 
 const HomeContainer = styled.div`
@@ -20,7 +21,7 @@ const CardsContainer = styled.div`
   justify-content: center;
 `;
 
-function Home({ orders, show, handleModal }) {
+function Home({ orders, setOrders, show, setShow, handleModal }) {
   const history = useHistory();
 
   return (
@@ -53,11 +54,7 @@ function Home({ orders, show, handleModal }) {
               />
             )}
             <Modal show={show} handleModal={handleModal}>
-              <h2>Modal</h2>
-              <p className='content'>Lorem ipsum</p>
-              <div className='actions'>
-                <button onClick={handleModal}>Close</button>
-              </div>
+              <Form setOrders={setOrders} setShow={setShow} />
             </Modal>
           </>
         )}

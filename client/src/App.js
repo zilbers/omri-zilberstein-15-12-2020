@@ -42,7 +42,13 @@ function App() {
             <Received />
           </Route>
           <Route exact path='/'>
-            <Home orders={orders} show={show} handleModal={handleModal} />
+            <Home
+              orders={orders}
+              setOrders={setOrders}
+              show={show}
+              setShow={setShow}
+              handleModal={handleModal}
+            />
           </Route>
         </Switch>
       </AppContainer>

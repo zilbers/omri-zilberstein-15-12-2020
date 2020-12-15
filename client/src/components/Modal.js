@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const ModalContainer = styled.div`
   position: absolute;
   top: 50%;
-  width: 500px;
+  width: 400px;
   background: white;
   border: 1px solid #ccc;
   transition: 1.1s ease-out;
@@ -23,7 +23,15 @@ const ModalContainer = styled.div`
   .content {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     padding: 1rem;
+    label {
+      display: flex;
+      justify-content: space-between;
+    }
+    input {
+      margin: 5px;
+    }
   }
   .actions {
     display: flex;
