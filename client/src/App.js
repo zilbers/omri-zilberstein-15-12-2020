@@ -33,7 +33,7 @@ function App() {
     <Router>
       <AppContainer>
         {show && <Shadow />}
-        <Header />
+        <Header length={orders.length} />
         <Switch>
           <Route exact path='/list'>
             <List />

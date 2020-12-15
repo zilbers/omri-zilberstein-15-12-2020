@@ -31,8 +31,8 @@ function Home({ orders, setOrders, show, setShow, handleModal }) {
           <>
             <Card
               grow={1}
-              title='Your tracking list'
-              content='See your waiting list'
+              title='Tracking List'
+              content='See your pending items'
               onClick={() => history.push('/list')}
             />
             <Card
