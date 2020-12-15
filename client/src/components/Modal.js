@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useDetectOutside from '../hooks/useDetectOutside';
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -50,8 +51,15 @@ const ModalContainer = styled.div`
   }
 `;
 
-function Modal({ show, children }) {
-  return show ? <ModalContainer>{children}</ModalContainer> : <> </>;
+function Modal({ show, setShow, children }) {
+  const wrapperRef = React.useRef(null);
+  useDetectOutside(wrapperRef, setShow);
+
+  return show ? (
+    <ModalContainer ref={wrapperRef}>{children}</ModalContainer>
+  ) : (
+    <> </>
+  );
 }
 
 export default Modal;

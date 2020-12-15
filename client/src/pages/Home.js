@@ -23,7 +23,6 @@ const CardsContainer = styled.div`
 
 function Home({ orders, setOrders, show, setShow, handleModal }) {
   const history = useHistory();
-
   return (
     <HomeContainer>
       <h1>Home</h1>
@@ -53,7 +52,7 @@ function Home({ orders, setOrders, show, setShow, handleModal }) {
                 onClick={handleModal}
               />
             )}
-            <Modal show={show} handleModal={handleModal}>
+            <Modal show={show} handleModal={handleModal} setShow={setShow}>
               <Form setOrders={setOrders} setShow={setShow} />
             </Modal>
           </>

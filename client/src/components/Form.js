@@ -6,7 +6,7 @@ const FormContainer = styled.div`
   flex-direction: column;
 `;
 
-function Form({ setShow }) {
+function Form({ setShow, setOrders }) {
   const [values, setValues] = React.useState({
     name: '',
     onlineStore: '',
@@ -16,7 +16,7 @@ function Form({ setShow }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    setOrders((prev) => [...prev, values]);
     setShow((prev) => !prev);
   };
 
@@ -51,6 +51,7 @@ function Form({ setShow }) {
             type='number'
             name='price'
             value={values.price}
+            min={0}
             onChange={(e) => handleChange(e, 'price')}
           />
         </label>
