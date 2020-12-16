@@ -35,12 +35,14 @@ function Home({ orders, received, setOrders, show, setShow, handleModal }) {
               title='Tracking List'
               content='See your pending items'
               onClick={() => history.push('/list')}
+              disabled={orders.length === 0}
             />
             <Card
               grow={1}
               title='Received'
               content='See the history of your orders'
               onClick={() => history.push('/received')}
+              disabled={received.length === 0}
             />
           </>
         ) : (

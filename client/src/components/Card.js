@@ -16,15 +16,24 @@ const CardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${({ disabled }) =>
+    disabled
+      ? `pointer-events: none;
+  opacity: 0.5;`
+      : ''}
   &:hover {
     transform: scale(1.03);
     cursor: pointer;
   }
 `;
 
-function Card({ title, content, grow, onClick, children }) {
+function Card({ title, content, grow, onClick, children, disabled }) {
   return (
-    <CardContainer grow={grow} onClick={() => (onClick ? onClick() : '')}>
+    <CardContainer
+      grow={grow}
+      disabled={disabled}
+      onClick={() => (onClick ? onClick() : '')}
+    >
       {title && <h1>{title}</h1>}
       {content && <p>{content}</p>}
       {children}
