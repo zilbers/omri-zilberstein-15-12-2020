@@ -1,9 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
+import { ThemeContext } from '../context/ThemeContext';
 
 const CardContainer = styled.div`
   flex-grow: ${({ grow }) => grow};
-  background: white;
-  border: 1px solid #ccc;
+  background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
+  border: 1px solid ${({ darkMode }) => (darkMode ? 'gray' : 'white')};
   transition: 0.3s ease-out;
   box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
   filter: blur(0);
@@ -44,14 +46,21 @@ const CardContainer = styled.div`
   button:hover {
     transform: scale(1.06);
   }
+  select {
+    background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
+    color: ${({ darkMode }) => (darkMode ? '#68d999' : 'black')};
+  }
 `;
 
 function Card({ title, content, grow, onClick, children, disabled }) {
+  const theme = React.useContext(ThemeContext);
+
   return (
     <CardContainer
       grow={grow}
       disabled={disabled}
       onClick={() => (onClick ? onClick() : '')}
+      darkMode={theme.darkMode}
     >
       {title && <h1>{title}</h1>}
       {content && <p>{content}</p>}
