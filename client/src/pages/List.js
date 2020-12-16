@@ -25,22 +25,30 @@ const AggregatedValuesContainer = styled.div`
   }
 `;
 
-function List({ orders, setA, setB, handleOrderState, title, show }) {
+function List({
+  orders,
+  setA,
+  setB,
+  handleOrderState,
+  title,
+  show,
+  exchangeRates,
+}) {
   const history = useHistory();
-  const [exchangeRates, setExchangeRates] = useState({});
   const [aggregatedValues, setAggregationValues] = useState([]);
 
   const handleCoinChange = (value, index) => {
-    setA((prev) => {
-      if (prev[index].price.coin !== value) {
-        prev[index].price.value =
-          value === 'dollar'
-            ? prev[index].price.value * (1 / exchangeRates.rates.ILS)
-            : prev[index].price.value * exchangeRates.rates.ILS;
-      }
-      prev[index].price.coin = value;
-      return prev.slice();
-    });
+    exchangeRates.rates &&
+      setA((prev) => {
+        if (prev[index].price.coin !== value) {
+          prev[index].price.value =
+            value === 'dollar'
+              ? prev[index].price.value * (1 / exchangeRates.rates.ILS)
+              : prev[index].price.value * exchangeRates.rates.ILS;
+        }
+        prev[index].price.coin = value;
+        return prev.slice();
+      });
   };
 
   useEffect(() => {
@@ -61,20 +69,11 @@ function List({ orders, setA, setB, handleOrderState, title, show }) {
     }
   }, [orders, orders.length, history]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetch('https://api.exchangeratesapi.io/latest?base=USD&symbols=ILS')
-        .then((response) => response.json())
-        .then((data) => setExchangeRates(data));
-    }, 1000 * 10);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <ListContainer>
       <h1>{title}</h1>
       {orders.map((order, index) => (
-        <Card grow={1} key={index} disabled={show}>
+        <Card grow={1} key={index} disabled={show.form || show.settings}>
           <Item
             title={title}
             order={order}
@@ -85,15 +84,15 @@ function List({ orders, setA, setB, handleOrderState, title, show }) {
           />
         </Card>
       ))}
-      <Card grow={1} disabled={show}>
+      <Card grow={1} disabled={show.form || show.settings}>
         <h3>Orders By Store</h3>
         <AggregatedValuesContainer>
           <div>
             <span>Store:</span>
             <span>Orders:</span>
           </div>
-          {aggregatedValues.map((value) => (
-            <div>
+          {aggregatedValues.map((value, index) => (
+            <div key={index}>
               <span>{value.onlineStore}</span>
               <span>{value.count}</span>
             </div>

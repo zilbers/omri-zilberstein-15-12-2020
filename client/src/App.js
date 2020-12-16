@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Header from './components/AppBar';
 import Modal from './components/Modal';
 import Form from './components/Form';
+import Settings from './components/Settings';
 import bg from './assets/bg-image.jpg';
 import styled from 'styled-components';
 
@@ -28,6 +29,9 @@ const Shadow = styled.div`
 function App() {
   const [orders, setOrders] = React.useState([]);
   const [received, setReceived] = React.useState([]);
+  const [cooldown, setCooldown] = React.useState(10);
+  const [exchangeRates, setExchangeRates] = React.useState({});
+
   const [show, setShow] = React.useState({ settings: false, form: false });
 
   const handleModal = (prop) => {
@@ -41,6 +45,15 @@ function App() {
     });
     setB((prev) => [...prev, item]);
   };
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      fetch('https://api.exchangeratesapi.io/latest?base=USD&symbols=ILS')
+        .then((response) => response.json())
+        .then((data) => setExchangeRates(data));
+    }, 1000 * cooldown);
+    return () => clearInterval(interval);
+  }, [cooldown]);
 
   return (
     <Router>
@@ -58,6 +71,7 @@ function App() {
               setB={setReceived}
               handleOrderState={handleOrderState}
               show={show}
+              exchangeRates={exchangeRates}
               title='On the way'
             />
           </Route>
@@ -68,6 +82,7 @@ function App() {
               setB={setOrders}
               handleOrderState={handleOrderState}
               show={show}
+              exchangeRates={exchangeRates}
               title='Received'
             />
           </Route>
@@ -82,14 +97,20 @@ function App() {
             />
           </Route>
         </Switch>
-        <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
-          <Form setOrders={setOrders} setShow={setShow} />
-        </Modal>
-        <Modal
-          show={show.settings}
-          handleModal={handleModal}
-          setShow={setShow}
-        ></Modal>
+        {show.form && (
+          <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
+            <Form setOrders={setOrders} setShow={setShow} />
+          </Modal>
+        )}
+        {show.settings && (
+          <Modal
+            show={show.settings}
+            handleModal={handleModal}
+            setShow={setShow}
+          >
+            <Settings cooldown={cooldown} setCooldown={setCooldown} />
+          </Modal>
+        )}
       </AppContainer>
     </Router>
   );

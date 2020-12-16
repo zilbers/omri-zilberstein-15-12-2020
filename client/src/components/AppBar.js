@@ -49,23 +49,16 @@ function AppBar({ length, handleModal }) {
       </Header>
       {length > 0 && (
         <List>
-          {location.pathname !== '/' && (
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-          )}
-          {location.pathname !== '/list' && (
-            <li>
-              <Link to='/list'>List</Link>
-            </li>
-          )}
-          {location.pathname !== '/received' && (
-            <li>
-              <Link to='/received'>Received</Link>
-            </li>
-          )}
-          <img src={addItem} alt='add item' onClick={handleModal} />
-          <img src={settings} alt='settings' />
+          <img
+            src={addItem}
+            alt='add item'
+            onClick={() => handleModal('form')}
+          />
+          <img
+            src={settings}
+            alt='settings'
+            onClick={() => handleModal('settings')}
+          />
         </List>
       )}
     </Container>
