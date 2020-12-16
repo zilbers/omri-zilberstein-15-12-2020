@@ -10,7 +10,7 @@ function Form({ setShow, setOrders }) {
   const [values, setValues] = React.useState({
     name: '',
     onlineStore: '',
-    price: 0,
+    price: { value: 0, coin: 'ils' },
     eta: '',
   });
 
@@ -20,8 +20,8 @@ function Form({ setShow, setOrders }) {
     setShow((prev) => !prev);
   };
 
-  const handleChange = (e, prop) => {
-    setValues((prev) => ({ ...prev, [prop]: e.target.value }));
+  const handleChange = (value, prop) => {
+    setValues((prev) => ({ ...prev, [prop]: value }));
   };
   return (
     <FormContainer>
@@ -33,7 +33,7 @@ function Form({ setShow, setOrders }) {
             type='text'
             name='itemName'
             value={values.name}
-            onChange={(e) => handleChange(e, 'name')}
+            onChange={({ target }) => handleChange(target.value, 'name')}
           />
         </label>
         <label>
@@ -42,7 +42,7 @@ function Form({ setShow, setOrders }) {
             type='text'
             name='onlineStore'
             value={values.onlineStore}
-            onChange={(e) => handleChange(e, 'onlineStore')}
+            onChange={({ target }) => handleChange(target.value, 'onlineStore')}
           />
         </label>
         <label>
@@ -50,10 +50,27 @@ function Form({ setShow, setOrders }) {
           <input
             type='number'
             name='price'
-            value={values.price}
+            value={values.price.value}
             min={0}
-            onChange={(e) => handleChange(e, 'price')}
+            onChange={({ target }) =>
+              handleChange(
+                { value: target.value, coin: values.price.coin },
+                'price'
+              )
+            }
           />
+          <select
+            value={values.price.coin}
+            onChange={({ target }) =>
+              handleChange(
+                { coin: target.value, value: values.price.value },
+                'price'
+              )
+            }
+          >
+            <option value='ils'>ils</option>
+            <option value='dollar'>dollar</option>
+          </select>
         </label>
         <label>
           ETA:
@@ -61,7 +78,7 @@ function Form({ setShow, setOrders }) {
             type='date'
             name='eta'
             value={values.eta}
-            onChange={(e) => handleChange(e, 'eta')}
+            onChange={({ target }) => handleChange(target.value, 'eta')}
           />
         </label>
         <div className='actions'>

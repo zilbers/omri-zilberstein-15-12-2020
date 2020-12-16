@@ -1,20 +1,35 @@
 import Card from '../components/Card';
+import Item from '../components/Item';
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
-function List({ orders, setA, setB, handleOrderState, title }) {
-  console.log(orders);
+function List({ orders, setA, setB, handleOrderState, title, show }) {
+  const history = useHistory();
+
+  const handleCoinChange = (value, index) => {
+    console.log(orders);
+    setA((prev) => {
+      prev[index].price.coin = value;
+      return prev.slice();
+    });
+  };
+
+  useEffect(() => {
+    if (orders.length === 0) history.push('/');
+  }, [orders.length, history]);
+
   return (
     <div>
       <h1>{title}</h1>
       {orders.map((order, index) => (
-        <Card
-          grow={1}
-          onClick={() => handleOrderState(setA, setB, orders[index], index)}
-          key={index}
-        >
-          <span>Name: {order.name}</span>
-          <span>Online Store: {order.onlineStore}</span>
-          <span>Price: {order.price}</span>
-          <span>ETA: {order.eta}</span>
+        <Card grow={1} key={index} disabled={show}>
+          <Item
+            title={title}
+            order={order}
+            handleCoinChange={handleCoinChange}
+            index={index}
+            onClick={() => handleOrderState(setA, setB, orders[index], index)}
+          />
         </Card>
       ))}
     </div>

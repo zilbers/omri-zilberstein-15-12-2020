@@ -25,6 +25,25 @@ const CardContainer = styled.div`
     transform: scale(1.03);
     cursor: pointer;
   }
+  label {
+    display: flex;
+    justify-content: space-between;
+  }
+  input {
+    margin: 5px;
+  }
+  button {
+    border: 0;
+    background: #78f89f;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    line-height: 1;
+    margin: 5px;
+  }
+  button:hover {
+    transform: scale(1.06);
+  }
 `;
 
 function Card({ title, content, grow, onClick, children, disabled }) {

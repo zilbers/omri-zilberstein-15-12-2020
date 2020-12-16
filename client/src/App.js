@@ -36,7 +36,7 @@ function App() {
 
   const handleOrderState = (setA, setB, item, index) => {
     setA((prev) => {
-      prev.splice(index - 1, 1);
+      prev.splice(index, 1);
       return prev;
     });
     setB((prev) => [...prev, item]);
@@ -57,6 +57,7 @@ function App() {
               setA={setOrders}
               setB={setReceived}
               handleOrderState={handleOrderState}
+              show={show}
               title='List'
             />
           </Route>
@@ -66,6 +67,7 @@ function App() {
               setA={setReceived}
               setB={setOrders}
               handleOrderState={handleOrderState}
+              show={show}
               title='Received'
             />
           </Route>
