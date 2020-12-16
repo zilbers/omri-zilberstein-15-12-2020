@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import useDetectOutside from '../hooks/useDetectOutside';
 
 const ModalContainer = styled.div`
-  position: absolute;
-  top: ${({ show }) => (show ? '50%' : '100%')};
-  width: ${({ show }) => (show ? '80%' : '0px')};
-  max-width: 400px;
+  position: fixed;
+  top: 30%;
+  width: 40%;
+  max-width: 550px;
+  min-width: 320px;
   background: white;
   border: ${({ show }) => (show ? '1px solid #ccc' : '0')};
   transition: 0.5s ease-out;

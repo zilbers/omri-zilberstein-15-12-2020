@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
-import Modal from '../components/Modal';
-import Form from '../components/Form';
 import { useHistory } from 'react-router-dom';
 
 const HomeContainer = styled.div`
@@ -21,7 +19,7 @@ const CardsContainer = styled.div`
   justify-content: center;
 `;
 
-function Home({ orders, received, setOrders, show, setShow, handleModal }) {
+function Home({ orders, received, show, handleModal }) {
   const history = useHistory();
 
   return (
@@ -35,14 +33,21 @@ function Home({ orders, received, setOrders, show, setShow, handleModal }) {
               title='Tracking List'
               content='See your pending items'
               onClick={() => history.push('/list')}
-              disabled={orders.length === 0}
+              disabled={orders.length === 0 || show}
             />
             <Card
               grow={1}
               title='Received'
               content='See the history of your orders'
               onClick={() => history.push('/received')}
-              disabled={received.length === 0}
+              disabled={received.length === 0 || show}
+            />
+            <Card
+              grow={1}
+              title='Statistics'
+              content='Watch analytics of your orders'
+              onClick={() => history.push('/statistics')}
+              disabled={show}
             />
           </>
         ) : (
@@ -55,9 +60,6 @@ function Home({ orders, received, setOrders, show, setShow, handleModal }) {
                 onClick={handleModal}
               />
             )}
-            <Modal show={show} handleModal={handleModal} setShow={setShow}>
-              <Form setOrders={setOrders} setShow={setShow} />
-            </Modal>
           </>
         )}
       </CardsContainer>

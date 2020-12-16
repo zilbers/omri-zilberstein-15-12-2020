@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import addItem from '../assets/add-item.svg';
 import styled from 'styled-components';
 
 const Container = styled.nav`
@@ -15,9 +16,6 @@ const Container = styled.nav`
     color: black;
     transition: 0.3s ease-out;
   }
-  a:hover {
-    transform: scale(1.05);
-  }
 `;
 
 const List = styled.ul`
@@ -25,6 +23,9 @@ const List = styled.ul`
   justify-content: space-around;
   flex-grow: 1;
   list-style-type: none;
+  img {
+    width: 24px;
+  }
 `;
 
 const Header = styled.h2`
@@ -33,7 +34,7 @@ const Header = styled.h2`
   flex-grow: 1;
 `;
 
-function AppBar({ length }) {
+function AppBar({ length, handleModal }) {
   const location = useLocation();
 
   return (
@@ -58,6 +59,7 @@ function AppBar({ length }) {
               <Link to='/received'>Received</Link>
             </li>
           )}
+          <img src={addItem} alt='add item' onClick={handleModal} />
         </List>
       )}
     </Container>

@@ -3,10 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './pages/List';
 import Home from './pages/Home';
 import Header from './components/AppBar';
-import styled from 'styled-components';
+import Modal from './components/Modal';
+import Form from './components/Form';
 import bg from './assets/bg-image.jpg';
+import styled from 'styled-components';
 
 const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100vh;
   width: 100vw;
   background-image: url(${bg});
@@ -41,7 +46,10 @@ function App() {
     <Router>
       <AppContainer>
         {show && <Shadow />}
-        <Header length={orders.length} />
+        <Header
+          length={orders.length + received.length}
+          handleModal={handleModal}
+        />
         <Switch>
           <Route exact path='/list'>
             <List
@@ -72,6 +80,9 @@ function App() {
             />
           </Route>
         </Switch>
+        <Modal show={show} handleModal={handleModal} setShow={setShow}>
+          <Form setOrders={setOrders} setShow={setShow} />
+        </Modal>
       </AppContainer>
     </Router>
   );

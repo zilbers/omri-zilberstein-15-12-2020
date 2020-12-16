@@ -1,6 +1,7 @@
 import Card from '../components/Card';
 
 function List({ orders, setA, setB, handleOrderState, title }) {
+  console.log(orders);
   return (
     <div>
       <h1>{title}</h1>
