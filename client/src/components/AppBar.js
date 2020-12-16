@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import addItem from '../assets/add-item.svg';
+import settings from '../assets/settings.svg';
 import styled from 'styled-components';
 
 const Container = styled.nav`
@@ -25,6 +26,10 @@ const List = styled.ul`
   list-style-type: none;
   img {
     width: 24px;
+  }
+  img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
   }
 `;
 
@@ -60,6 +65,7 @@ function AppBar({ length, handleModal }) {
             </li>
           )}
           <img src={addItem} alt='add item' onClick={handleModal} />
+          <img src={settings} alt='settings' />
         </List>
       )}
     </Container>

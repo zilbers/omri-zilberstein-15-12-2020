@@ -17,7 +17,7 @@ function Form({ setShow, setOrders }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setOrders((prev) => [...prev, values]);
-    setShow((prev) => !prev);
+    setShow((prev) => ({ ...prev, form: false }));
   };
 
   const handleChange = (value, prop) => {

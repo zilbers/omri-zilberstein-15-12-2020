@@ -28,10 +28,10 @@ const Shadow = styled.div`
 function App() {
   const [orders, setOrders] = React.useState([]);
   const [received, setReceived] = React.useState([]);
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = React.useState({ settings: false, form: false });
 
-  const handleModal = () => {
-    setShow((prev) => !prev);
+  const handleModal = (prop) => {
+    setShow((prev) => ({ ...prev, [prop]: !prev[prop] }));
   };
 
   const handleOrderState = (setA, setB, item, index) => {
@@ -45,7 +45,7 @@ function App() {
   return (
     <Router>
       <AppContainer>
-        {show && <Shadow />}
+        {(show.form || show.settings) && <Shadow />}
         <Header
           length={orders.length + received.length}
           handleModal={handleModal}
@@ -58,7 +58,7 @@ function App() {
               setB={setReceived}
               handleOrderState={handleOrderState}
               show={show}
-              title='List'
+              title='On the way'
             />
           </Route>
           <Route exact path='/received'>
@@ -82,9 +82,14 @@ function App() {
             />
           </Route>
         </Switch>
-        <Modal show={show} handleModal={handleModal} setShow={setShow}>
+        <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
           <Form setOrders={setOrders} setShow={setShow} />
         </Modal>
+        <Modal
+          show={show.settings}
+          handleModal={handleModal}
+          setShow={setShow}
+        ></Modal>
       </AppContainer>
     </Router>
   );

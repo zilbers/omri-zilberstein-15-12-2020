@@ -33,31 +33,31 @@ function Home({ orders, received, show, handleModal }) {
               title='Tracking List'
               content='See your pending items'
               onClick={() => history.push('/list')}
-              disabled={orders.length === 0 || show}
+              disabled={orders.length === 0 || show.form || show.settings}
             />
             <Card
               grow={1}
               title='Received'
               content='See the history of your orders'
               onClick={() => history.push('/received')}
-              disabled={received.length === 0 || show}
+              disabled={received.length === 0 || show.form || show.settings}
             />
             <Card
               grow={1}
               title='Statistics'
               content='Watch analytics of your orders'
               onClick={() => history.push('/statistics')}
-              disabled={show}
+              disabled={show.form || show.settings}
             />
           </>
         ) : (
           <>
-            {!show && (
+            {!(show.form || show.settings) && (
               <Card
                 grow={1}
                 title='Get Started'
                 content='Add an item to your waiting list'
-                onClick={handleModal}
+                onClick={() => handleModal('form')}
               />
             )}
           </>
