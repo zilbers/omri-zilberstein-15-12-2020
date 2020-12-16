@@ -25,6 +25,7 @@ const CardContainer = styled.div`
       : ''}
   &:hover {
     transform: scale(1.02);
+    cursor: pointer;
   }
   label {
     display: flex;

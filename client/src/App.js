@@ -12,6 +12,7 @@ import darkBg from './assets/dark-bg-image.jpg';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,6 +21,8 @@ const AppContainer = styled.div`
   color: ${({ darkMode }) => (darkMode ? '#68d999' : `black`)};
   background-image: ${({ darkMode }) =>
     darkMode ? `url(${darkBg})` : `url(${bg})`};
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 const Shadow = styled.div`
