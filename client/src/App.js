@@ -7,6 +7,7 @@ import Modal from './components/Modal';
 import Form from './components/Form';
 import Settings from './components/Settings';
 import bg from './assets/bg-image.jpg';
+import darkBg from './assets/dark-bg-image.jpg';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
@@ -15,7 +16,8 @@ const AppContainer = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-image: url(${bg});
+  color: ${({ darkMode }) => (darkMode ? `white` : `black`)};
+  background-image: ${({ backgroundImage }) => backgroundImage};
 `;
 
 const Shadow = styled.div`
@@ -26,10 +28,22 @@ const Shadow = styled.div`
   width: 100vw;
 `;
 
+const themes = {
+  light: {
+    backgroundImage: `url(${bg})`,
+  },
+  dark: {
+    backgroundImage: `url(${darkBg})`,
+  },
+};
+
+export const ThemeContext = React.createContext(themes);
+
 function App() {
   const [orders, setOrders] = React.useState([]);
   const [received, setReceived] = React.useState([]);
   const [cooldown, setCooldown] = React.useState(10);
+  const [darkMode, setDarkMode] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [exchangeRates, setExchangeRates] = React.useState({});
 
@@ -62,67 +76,77 @@ function App() {
 
   return (
     <Router>
-      <AppContainer>
-        {(show.form || show.settings) && <Shadow />}
-        <Header
-          length={orders.length + received.length}
-          handleModal={handleModal}
-          error={error.value}
-        />
-        <Switch>
-          <Route exact path='/list'>
-            <List
-              orders={orders}
-              setA={setOrders}
-              setB={setReceived}
-              handleOrderState={handleOrderState}
-              show={show}
-              exchangeRates={exchangeRates}
-              title='On the way'
-            />
-          </Route>
-          <Route exact path='/received'>
-            <List
-              orders={received}
-              setA={setReceived}
-              setB={setOrders}
-              handleOrderState={handleOrderState}
-              show={show}
-              exchangeRates={exchangeRates}
-              title='Received'
-            />
-          </Route>
-          <Route exact path='/'>
-            <Home
-              orders={orders}
-              received={received}
-              setOrders={setOrders}
-              show={show}
-              setShow={setShow}
-              handleModal={handleModal}
-            />
-          </Route>
-        </Switch>
-        {show.form && (
-          <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
-            <Form setOrders={setOrders} setShow={setShow} />
-          </Modal>
-        )}
-        {show.settings && (
-          <Modal
-            show={show.settings}
+      <ThemeContext.Provider value={themes.dark}>
+        <AppContainer
+          darkMode={darkMode}
+          backgroundImage={
+            themes[`${darkMode ? 'dark' : 'light'}`].backgroundImage
+          }
+        >
+          {(show.form || show.settings) && <Shadow />}
+          <Header
+            length={orders.length + received.length}
             handleModal={handleModal}
-            setShow={setShow}
-          >
-            <Settings
-              cooldown={cooldown}
-              setCooldown={setCooldown}
+            error={error.value}
+          />
+          <button onClick={() => setDarkMode((prev) => !prev)}>
+            Theme test
+          </button>
+          <Switch>
+            <Route exact path='/list'>
+              <List
+                orders={orders}
+                setA={setOrders}
+                setB={setReceived}
+                handleOrderState={handleOrderState}
+                show={show}
+                exchangeRates={exchangeRates}
+                title='On the way'
+              />
+            </Route>
+            <Route exact path='/received'>
+              <List
+                orders={received}
+                setA={setReceived}
+                setB={setOrders}
+                handleOrderState={handleOrderState}
+                show={show}
+                exchangeRates={exchangeRates}
+                title='Received'
+              />
+            </Route>
+            <Route exact path='/'>
+              <Home
+                orders={orders}
+                received={received}
+                setOrders={setOrders}
+                show={show}
+                setShow={setShow}
+                handleModal={handleModal}
+              />
+            </Route>
+          </Switch>
+          {show.form && (
+            <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
+              <Form setOrders={setOrders} setShow={setShow} />
+            </Modal>
+          )}
+          {show.settings && (
+            <Modal
+              show={show.settings}
+              handleModal={handleModal}
               setShow={setShow}
-              error={error}
-            />
-          </Modal>
-        )}
-      </AppContainer>
+            >
+              <Settings
+                cooldown={cooldown}
+                setCooldown={setCooldown}
+                setShow={setShow}
+                error={error}
+              />
+            </Modal>
+          )}
+        </AppContainer>
+      </ThemeContext.Provider>
     </Router>
   );
 }
