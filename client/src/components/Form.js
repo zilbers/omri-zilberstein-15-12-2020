@@ -5,7 +5,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   #price {
-    width: 37%;
+    width: 36%;
   }
   span {
     display: flex;
