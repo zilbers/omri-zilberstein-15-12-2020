@@ -6,17 +6,17 @@ import settings from '../assets/settings.svg';
 import styled from 'styled-components';
 
 const Container = styled.nav`
-  width: 96%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   background-repeat: 'no-repeat';
   background-size: 'cover';
-  padding: 0 2% 0 2%;
+  background: ${({ darkMode }) =>
+    darkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.3)'};
   a {
     text-decoration: none;
     color: ${({ darkMode }) => (darkMode ? '#68d999' : 'black')};
-    background: ${({ darkMode }) => (darkMode ? 'black' : 'none')};
     border-radius: 5px;
     transition: 0.3s ease-out;
   }
