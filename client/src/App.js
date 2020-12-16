@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './pages/List';
-import Received from './pages/Received';
 import Home from './pages/Home';
 import Header from './components/AppBar';
 import styled from 'styled-components';
@@ -23,10 +22,19 @@ const Shadow = styled.div`
 
 function App() {
   const [orders, setOrders] = React.useState([]);
+  const [received, setReceived] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
   const handleModal = () => {
     setShow((prev) => !prev);
+  };
+
+  const handleOrderState = (setA, setB, item, index) => {
+    setA((prev) => {
+      prev.splice(index - 1, 1);
+      return prev;
+    });
+    setB((prev) => [...prev, item]);
   };
 
   return (
@@ -36,14 +44,27 @@ function App() {
         <Header length={orders.length} />
         <Switch>
           <Route exact path='/list'>
-            <List />
+            <List
+              orders={orders}
+              setA={setOrders}
+              setB={setReceived}
+              handleOrderState={handleOrderState}
+              title='List'
+            />
           </Route>
           <Route exact path='/received'>
-            <Received />
+            <List
+              orders={received}
+              setA={setReceived}
+              setB={setOrders}
+              handleOrderState={handleOrderState}
+              title='Received'
+            />
           </Route>
           <Route exact path='/'>
             <Home
               orders={orders}
+              received={received}
               setOrders={setOrders}
               show={show}
               setShow={setShow}

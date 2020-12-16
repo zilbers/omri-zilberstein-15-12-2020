@@ -21,14 +21,14 @@ const CardsContainer = styled.div`
   justify-content: center;
 `;
 
-function Home({ orders, setOrders, show, setShow, handleModal }) {
+function Home({ orders, received, setOrders, show, setShow, handleModal }) {
   const history = useHistory();
 
   return (
     <HomeContainer>
       <h1>Home</h1>
       <CardsContainer>
-        {orders.length > 0 ? (
+        {orders.length > 0 || received.length > 0 ? (
           <>
             <Card
               grow={1}

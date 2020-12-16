@@ -22,11 +22,12 @@ const CardContainer = styled.div`
   }
 `;
 
-function Card({ title, content, grow, onClick }) {
+function Card({ title, content, grow, onClick, children }) {
   return (
-    <CardContainer grow={grow} onClick={() => onClick()}>
-      <h1>{title}</h1>
-      <p>{content}</p>
+    <CardContainer grow={grow} onClick={() => (onClick ? onClick() : '')}>
+      {title && <h1>{title}</h1>}
+      {content && <p>{content}</p>}
+      {children}
     </CardContainer>
   );
 }
