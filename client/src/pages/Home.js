@@ -45,7 +45,7 @@ function Home({ orders, received, show, handleModal }) {
             <Card
               grow={1}
               title='Statistics'
-              content='Watch analytics of your orders'
+              content='Get analytics of your orders'
               onClick={() => history.push('/statistics')}
               disabled={show.form || show.settings}
             />

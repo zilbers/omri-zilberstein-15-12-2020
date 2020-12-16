@@ -4,16 +4,20 @@ import styled from 'styled-components';
 const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  input {
+    width: 50px;
+  }
 `;
 
-function Settings({ cooldown, setCooldown }) {
+function Settings({ cooldown, setCooldown, setShow }) {
   const [values, setValues] = React.useState({
     cooldown,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCooldown(() => e.target.value);
+    setCooldown(() => values.cooldown);
+    setShow((prev) => ({ ...prev, settings: false }));
   };
 
   const handleChange = (value, prop) => {
@@ -31,6 +35,7 @@ function Settings({ cooldown, setCooldown }) {
             value={values.cooldown}
             onChange={({ target }) => handleChange(target.value, 'cooldown')}
           />
+          sec
         </label>
 
         <div className='actions'>
