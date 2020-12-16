@@ -14,5 +14,5 @@ export default function useOutsideAlerter(ref, setter) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, setter]);
 }
