@@ -4,11 +4,12 @@ import useDetectOutside from '../hooks/useDetectOutside';
 
 const ModalContainer = styled.div`
   position: absolute;
-  top: 50%;
-  width: 400px;
+  top: ${({ show }) => (show ? '50%' : '100%')};
+  width: ${({ show }) => (show ? '80%' : '0px')};
+  max-width: 400px;
   background: white;
-  border: 1px solid #ccc;
-  transition: 1.1s ease-out;
+  border: ${({ show }) => (show ? '1px solid #ccc' : '0')};
+  transition: 0.5s ease-out;
   box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
   filter: blur(0);
   transform: scale(1);
@@ -55,10 +56,10 @@ function Modal({ show, setShow, children }) {
   const wrapperRef = React.useRef(null);
   useDetectOutside(wrapperRef, setShow);
 
-  return show ? (
-    <ModalContainer ref={wrapperRef}>{children}</ModalContainer>
-  ) : (
-    <> </>
+  return (
+    <ModalContainer show={show} ref={wrapperRef}>
+      {show && children}
+    </ModalContainer>
   );
 }
 

@@ -23,6 +23,7 @@ const CardsContainer = styled.div`
 
 function Home({ orders, setOrders, show, setShow, handleModal }) {
   const history = useHistory();
+
   return (
     <HomeContainer>
       <h1>Home</h1>

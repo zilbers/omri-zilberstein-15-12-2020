@@ -5,7 +5,7 @@ export default function useOutsideAlerter(ref, setter) {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         if (setter) {
-          setter((prev) => !prev);
+          setter(() => false);
         }
       }
     }

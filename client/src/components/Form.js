@@ -64,7 +64,11 @@ function Form({ setShow, setOrders }) {
             onChange={(e) => handleChange(e, 'eta')}
           />
         </label>
-        <input type='submit' value='Submit' />
+        <div className='actions'>
+          <button type='submit' value='Submit'>
+            Submit
+          </button>
+        </div>
       </form>
     </FormContainer>
   );
