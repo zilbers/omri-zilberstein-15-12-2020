@@ -4,6 +4,9 @@ import styled from 'styled-components';
 const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  input {
+    width: 50px;
+  }
 `;
 
 function Settings({ cooldown, setCooldown, setShow }) {
@@ -32,6 +35,7 @@ function Settings({ cooldown, setCooldown, setShow }) {
             value={values.cooldown}
             onChange={({ target }) => handleChange(target.value, 'cooldown')}
           />
+          sec
         </label>
 
         <div className='actions'>
