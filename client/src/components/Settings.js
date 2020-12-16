@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 import styled from 'styled-components';
 
 const SettingsContainer = styled.div`
@@ -20,6 +21,7 @@ function Settings({ cooldown, setCooldown, setShow, error }) {
   const [values, setValues] = React.useState({
     cooldown,
   });
+  const theme = React.useContext(ThemeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +31,11 @@ function Settings({ cooldown, setCooldown, setShow, error }) {
 
   const handleChange = (value, prop) => {
     setValues((prev) => ({ ...prev, [prop]: value }));
+  };
+
+  const handleTheme = (e) => {
+    e.preventDefault();
+    theme.changeTheme();
   };
   return (
     <SettingsContainer>
@@ -47,6 +54,7 @@ function Settings({ cooldown, setCooldown, setShow, error }) {
         </label>
 
         <div className='actions'>
+          <button onClick={handleTheme}>Change Theme</button>
           <button type='submit' value='Submit'>
             Submit
           </button>

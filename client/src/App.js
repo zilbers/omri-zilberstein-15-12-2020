@@ -74,7 +74,6 @@ function App() {
           handleModal={handleModal}
           error={error.value}
         />
-        <button onClick={theme.changeTheme}>Theme test</button>
         <Switch>
           <Route exact path='/list'>
             <List
