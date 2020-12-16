@@ -108,7 +108,11 @@ function App() {
             handleModal={handleModal}
             setShow={setShow}
           >
-            <Settings cooldown={cooldown} setCooldown={setCooldown} />
+            <Settings
+              cooldown={cooldown}
+              setCooldown={setCooldown}
+              setShow={setShow}
+            />
           </Modal>
         )}
       </AppContainer>

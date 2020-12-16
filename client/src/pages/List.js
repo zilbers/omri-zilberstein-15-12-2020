@@ -11,6 +11,7 @@ function capitalize(string) {
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const AggregatedValuesContainer = styled.div`
@@ -85,7 +86,7 @@ function List({
         </Card>
       ))}
       <Card grow={1} disabled={show.form || show.settings}>
-        <h3>Orders By Store</h3>
+        <h3>{title} by store</h3>
         <AggregatedValuesContainer>
           <div>
             <span>Store:</span>

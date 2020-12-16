@@ -6,14 +6,15 @@ const SettingsContainer = styled.div`
   flex-direction: column;
 `;
 
-function Settings({ cooldown, setCooldown }) {
+function Settings({ cooldown, setCooldown, setShow }) {
   const [values, setValues] = React.useState({
     cooldown,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCooldown(() => e.target.value);
+    setCooldown(() => values.cooldown);
+    setShow((prev) => ({ ...prev, settings: false }));
   };
 
   const handleChange = (value, prop) => {
