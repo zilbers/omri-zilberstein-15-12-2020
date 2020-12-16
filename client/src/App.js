@@ -23,6 +23,7 @@ const AppContainer = styled.div`
     darkMode ? `url(${darkBg})` : `url(${bg})`};
   background-repeat: no-repeat;
   background-size: cover;
+  box-sizing: border-box;
 `;
 
 const Shadow = styled.div`

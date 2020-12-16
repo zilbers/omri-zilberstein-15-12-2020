@@ -9,7 +9,7 @@ const ModalContainer = styled.div`
   width: 40%;
   max-width: 550px;
   min-width: 320px;
-  background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
+  background: ${({ darkMode }) => (darkMode ? '#1a1a1a' : 'white')};
   border: ${({ show }) => (show ? '1px solid gray' : '0')};
   transition: 0.5s ease-out;
   box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
@@ -31,17 +31,24 @@ const ModalContainer = styled.div`
     padding: 1rem;
     label {
       display: flex;
+      align-items: center;
       justify-content: space-between;
     }
     input {
       margin: 5px;
+      padding: 5px;
+      border: 0;
       color: ${({ darkMode }) => (darkMode ? '#68d999' : `black`)};
-      background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
+      background: ${({ darkMode }) => (darkMode ? 'black' : '#ccc')};
     }
     select {
       margin: 5px;
+      padding: 5px;
+      text-align: center;
+      text-align-last: center;
+      background: ${({ darkMode }) => (darkMode ? 'black' : '#ccc')};
       color: ${({ darkMode }) => (darkMode ? '#68d999' : `black`)};
-      background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
+      border: 0;
     }
   }
   .actions {
@@ -50,7 +57,7 @@ const ModalContainer = styled.div`
     align-items: center;
     justify-content: center;
     border-top: 2px solid #ccc;
-    background: ${({ darkMode }) => (darkMode ? 'black' : '#eee')};
+    background: ${({ darkMode }) => (darkMode ? '#1a1a1a' : '#eee')};
     padding: 0.5rem 1rem;
     button {
       border: 0;
