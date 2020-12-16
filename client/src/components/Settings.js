@@ -9,7 +9,14 @@ const SettingsContainer = styled.div`
   }
 `;
 
-function Settings({ cooldown, setCooldown, setShow }) {
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background: red;
+  border-radius: 10px;
+`;
+
+function Settings({ cooldown, setCooldown, setShow, error }) {
   const [values, setValues] = React.useState({
     cooldown,
   });
@@ -26,6 +33,7 @@ function Settings({ cooldown, setCooldown, setShow }) {
   return (
     <SettingsContainer>
       <h2>Settings</h2>
+      {error.value && <ErrorContainer>{error.message}</ErrorContainer>}
       <form className='content' onSubmit={handleSubmit}>
         <label>
           Cooldown:

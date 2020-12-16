@@ -31,6 +31,10 @@ const List = styled.ul`
     cursor: pointer;
     transform: scale(1.1);
   }
+  .settings {
+    background: ${({ error }) => (error ? 'red' : 'none')};
+    border-radius: 5px;
+  }
 `;
 
 const Header = styled.h2`
@@ -39,7 +43,7 @@ const Header = styled.h2`
   flex-grow: 1;
 `;
 
-function AppBar({ length, handleModal }) {
+function AppBar({ length, handleModal, error }) {
   const location = useLocation();
 
   return (
@@ -48,7 +52,7 @@ function AppBar({ length, handleModal }) {
         <Link to='/'>Shopping Tracking List</Link>
       </Header>
       {length > 0 && (
-        <List>
+        <List error={error}>
           <img
             src={addItem}
             alt='add item'
@@ -57,6 +61,7 @@ function AppBar({ length, handleModal }) {
           <img
             src={settings}
             alt='settings'
+            className='settings'
             onClick={() => handleModal('settings')}
           />
         </List>

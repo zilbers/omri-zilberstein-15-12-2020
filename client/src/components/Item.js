@@ -7,6 +7,11 @@ const ItemContainer = styled.div`
     justify-content: space-between;
     width: 100%;
   }
+  select {
+    text-align: center;
+    text-align-last: center;
+    margin-left: 4px;
+  }
 `;
 
 function Item({ order, title, onClick, handleCoinChange, index, capitalize }) {

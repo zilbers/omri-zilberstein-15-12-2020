@@ -4,6 +4,23 @@ import styled from 'styled-components';
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
+  #price {
+    width: 46%;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  select {
+    text-align: center;
+    text-align-last: center;
+  }
 `;
 
 function Form({ setShow, setOrders }) {
@@ -47,30 +64,33 @@ function Form({ setShow, setOrders }) {
         </label>
         <label>
           Price:
-          <input
-            type='number'
-            name='price'
-            value={values.price.value}
-            min={0}
-            onChange={({ target }) =>
-              handleChange(
-                { value: target.value, coin: values.price.coin },
-                'price'
-              )
-            }
-          />
-          <select
-            value={values.price.coin}
-            onChange={({ target }) =>
-              handleChange(
-                { coin: target.value, value: values.price.value },
-                'price'
-              )
-            }
-          >
-            <option value='ils'>ils</option>
-            <option value='dollar'>dollar</option>
-          </select>
+          <span>
+            <input
+              type='number'
+              name='price'
+              id='price'
+              value={values.price.value}
+              min={0}
+              onChange={({ target }) =>
+                handleChange(
+                  { value: target.value, coin: values.price.coin },
+                  'price'
+                )
+              }
+            />
+            <select
+              value={values.price.coin}
+              onChange={({ target }) =>
+                handleChange(
+                  { coin: target.value, value: values.price.value },
+                  'price'
+                )
+              }
+            >
+              <option value='ils'>ils</option>
+              <option value='dollar'>dollar</option>
+            </select>
+          </span>
         </label>
         <label>
           ETA:

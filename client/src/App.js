@@ -30,6 +30,7 @@ function App() {
   const [orders, setOrders] = React.useState([]);
   const [received, setReceived] = React.useState([]);
   const [cooldown, setCooldown] = React.useState(10);
+  const [error, setError] = React.useState(false);
   const [exchangeRates, setExchangeRates] = React.useState({});
 
   const [show, setShow] = React.useState({ settings: false, form: false });
@@ -50,7 +51,11 @@ function App() {
     const interval = setInterval(() => {
       fetch('https://api.exchangeratesapi.io/latest?base=USD&symbols=ILS')
         .then((response) => response.json())
-        .then((data) => setExchangeRates(data));
+        .then((data) => {
+          setError({ value: false });
+          setExchangeRates(data);
+        })
+        .catch((message) => setError({ message, value: true }));
     }, 1000 * cooldown);
     return () => clearInterval(interval);
   }, [cooldown]);
@@ -62,6 +67,7 @@ function App() {
         <Header
           length={orders.length + received.length}
           handleModal={handleModal}
+          error={error.value}
         />
         <Switch>
           <Route exact path='/list'>
@@ -112,6 +118,7 @@ function App() {
               cooldown={cooldown}
               setCooldown={setCooldown}
               setShow={setShow}
+              error={error}
             />
           </Modal>
         )}
