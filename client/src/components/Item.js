@@ -4,7 +4,7 @@ function List({ order, title, onClick, handleCoinChange, index }) {
       <span>Name: {order.name}</span>
       <span>Online Store: {order.onlineStore}</span>
       <span>
-        Price: {order.price.value}
+        Price: {Math.round(order.price.value * 100) / 100}
         <select
           value={order.price.coin}
           onChange={({ target }) => handleCoinChange(target.value, index)}
