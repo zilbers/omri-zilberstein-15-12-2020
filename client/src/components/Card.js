@@ -24,8 +24,7 @@ const CardContainer = styled.div`
   opacity: 0.5;`
       : ''}
   &:hover {
-    transform: scale(1.03);
-    cursor: pointer;
+    transform: scale(1.02);
   }
   label {
     display: flex;
@@ -45,10 +44,14 @@ const CardContainer = styled.div`
   }
   button:hover {
     transform: scale(1.06);
+    cursor: pointer;
   }
   select {
     background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
     color: ${({ darkMode }) => (darkMode ? '#68d999' : 'black')};
+  }
+  select:hover {
+    cursor: pointer;
   }
 `;
 
