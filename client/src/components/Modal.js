@@ -10,7 +10,7 @@ const ModalContainer = styled.div`
   max-width: 550px;
   min-width: 320px;
   background: ${({ darkMode }) => (darkMode ? 'black' : 'white')};
-  border: ${({ show }) => (show ? '1px solid #ccc' : '0')};
+  border: ${({ show }) => (show ? '1px solid gray' : '0')};
   transition: 0.5s ease-out;
   box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
   filter: blur(0);
