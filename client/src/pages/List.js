@@ -7,6 +7,11 @@ import styled from 'styled-components';
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+function sort(arr) {
+  return arr.sort(function (a, b) {
+    return new Date(b.eta) - new Date(a.eta);
+  });
+}
 
 const ListContainer = styled.div`
   display: flex;
@@ -89,7 +94,7 @@ function List({
           ))}
         </AggregatedValuesContainer>
       </Card>
-      {orders.map((order, index) => (
+      {sort(orders).map((order, index) => (
         <Card grow={1} key={index} disabled={show.form || show.settings}>
           <Item
             title={title}

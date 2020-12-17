@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { useHistory } from 'react-router-dom';
 
 const HomeContainer = styled.div`
@@ -25,37 +26,39 @@ function Home({ orders, received, show, handleModal }) {
   return (
     <HomeContainer>
       <h1>Home</h1>
-      <CardsContainer>
-        {orders.length > 0 || received.length > 0 ? (
-          <>
-            <Card
-              grow={1}
-              title='Tracking List'
-              content='See your pending items'
-              onClick={() => history.push('/list')}
-              disabled={orders.length === 0 || show.form || show.settings}
-            />
-            <Card
-              grow={1}
-              title='Received'
-              content='See the history of your orders'
-              onClick={() => history.push('/received')}
-              disabled={received.length === 0 || show.form || show.settings}
-            />
-          </>
-        ) : (
-          <>
-            {!(show.form || show.settings) && (
+      <ErrorBoundary>
+        <CardsContainer>
+          {orders.length > 0 || received.length > 0 ? (
+            <>
               <Card
                 grow={1}
-                title='Get Started'
-                content='Add an item to your waiting list'
-                onClick={() => handleModal('form')}
+                title='Tracking List'
+                content='See your pending items'
+                onClick={() => history.push('/list')}
+                disabled={orders.length === 0 || show.form || show.settings}
               />
-            )}
-          </>
-        )}
-      </CardsContainer>
+              <Card
+                grow={1}
+                title='Received'
+                content='See the history of your orders'
+                onClick={() => history.push('/received')}
+                disabled={received.length === 0 || show.form || show.settings}
+              />
+            </>
+          ) : (
+            <>
+              {!(show.form || show.settings) && (
+                <Card
+                  grow={1}
+                  title='Get Started'
+                  content='Add an item to your waiting list'
+                  onClick={() => handleModal('form')}
+                />
+              )}
+            </>
+          )}
+        </CardsContainer>
+      </ErrorBoundary>
     </HomeContainer>
   );
 }
