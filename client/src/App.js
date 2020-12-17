@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeContext } from './context/ThemeContext';
 import List from './pages/List';
 import Home from './pages/Home';
+import Statistics from './pages/Statistics';
 import Header from './components/AppBar';
 import Modal from './components/Modal';
 import Form from './components/Form';
@@ -69,6 +70,20 @@ function App() {
     return () => clearInterval(interval);
   }, [cooldown]);
 
+  React.useEffect(() => {
+    if (orders.length > 0 || received.length) {
+      localStorage.setItem('orders', JSON.stringify(orders));
+      localStorage.setItem('received', JSON.stringify(received));
+    }
+  }, [orders.length, received.length]);
+
+  React.useEffect(() => {
+    const storedOrders = localStorage.getItem('orders');
+    const storedReceived = localStorage.getItem('received');
+    if (storedOrders) setOrders(JSON.parse(storedOrders));
+    if (storedReceived) setReceived(JSON.parse(storedReceived));
+  }, []);
+
   return (
     <Router>
       <AppContainer darkMode={theme.darkMode}>
@@ -101,7 +116,14 @@ function App() {
               title='Received'
             />
           </Route>
-          <Route exact path='/'>
+          <Route exact path='/Statistics'>
+            <Statistics
+              title='Statistics'
+              orders={orders}
+              received={received}
+            />
+          </Route>
+          <Route path='/'>
             <Home
               orders={orders}
               received={received}

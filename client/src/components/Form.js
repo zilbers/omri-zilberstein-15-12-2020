@@ -24,7 +24,11 @@ function Form({ setShow, setOrders }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOrders((prev) => [...prev, values]);
+    setOrders((prev) => {
+      const newOrders = [...prev, values];
+      localStorage.setItem('orders', JSON.stringify(newOrders));
+      return newOrders;
+    });
     setShow((prev) => ({ ...prev, form: false }));
   };
 
