@@ -7,6 +7,7 @@ import Header from './components/AppBar';
 import Modal from './components/Modal';
 import Form from './components/Form';
 import Settings from './components/Settings';
+import ErrorBoundary from './components/ErrorBoundary';
 import bg from './assets/bg-image.jpg';
 import darkBg from './assets/dark-bg-image.jpg';
 import styled from 'styled-components';
@@ -85,61 +86,63 @@ function App() {
           handleModal={handleModal}
           error={error.value}
         />
-        <Switch>
-          <Route exact path='/list'>
-            <List
-              orders={orders}
-              setA={setOrders}
-              setB={setReceived}
-              handleOrderState={handleOrderState}
-              show={show}
-              exchangeRates={exchangeRates}
-              remove={remove}
-              title='orders'
-            />
-          </Route>
-          <Route exact path='/received'>
-            <List
-              orders={received}
-              setA={setReceived}
-              setB={setOrders}
-              handleOrderState={handleOrderState}
-              show={show}
-              exchangeRates={exchangeRates}
-              remove={remove}
-              title='received'
-            />
-          </Route>
-          <Route path='/'>
-            <Home
-              orders={orders}
-              received={received}
-              setOrders={setOrders}
-              show={show}
-              setShow={setShow}
+        <ErrorBoundary>
+          <Switch>
+            <Route exact path='/list'>
+              <List
+                orders={orders}
+                setA={setOrders}
+                setB={setReceived}
+                handleOrderState={handleOrderState}
+                show={show}
+                exchangeRates={exchangeRates}
+                remove={remove}
+                title='orders'
+              />
+            </Route>
+            <Route exact path='/received'>
+              <List
+                orders={received}
+                setA={setReceived}
+                setB={setOrders}
+                handleOrderState={handleOrderState}
+                show={show}
+                exchangeRates={exchangeRates}
+                remove={remove}
+                title='received'
+              />
+            </Route>
+            <Route path='/'>
+              <Home
+                orders={orders}
+                received={received}
+                setOrders={setOrders}
+                show={show}
+                setShow={setShow}
+                handleModal={handleModal}
+              />
+            </Route>
+          </Switch>
+          {show.form && (
+            <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
+              <Form setOrders={setOrders} setShow={setShow} />
+            </Modal>
+          )}
+          {show.settings && (
+            <Modal
+              show={show.settings}
               handleModal={handleModal}
-            />
-          </Route>
-        </Switch>
-        {show.form && (
-          <Modal show={show.form} handleModal={handleModal} setShow={setShow}>
-            <Form setOrders={setOrders} setShow={setShow} />
-          </Modal>
-        )}
-        {show.settings && (
-          <Modal
-            show={show.settings}
-            handleModal={handleModal}
-            setShow={setShow}
-          >
-            <Settings
-              cooldown={cooldown}
-              setCooldown={setCooldown}
               setShow={setShow}
-              error={error}
-            />
-          </Modal>
-        )}
+            >
+              <Settings
+                cooldown={cooldown}
+                setCooldown={setCooldown}
+                setShow={setShow}
+                error={error}
+              />
+            </Modal>
+          )}
+        </ErrorBoundary>
       </AppContainer>
     </Router>
   );
