@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import close from '../assets/close.png';
 
 const ItemContainer = styled.div`
   width: 80%;
@@ -12,12 +13,32 @@ const ItemContainer = styled.div`
     text-align-last: center;
     margin-left: 4px;
   }
+  img {
+    width: 18px;
+    margin: 2px;
+    justify-self: end;
+  }
+  img:hover {
+    transform: scale(1.06);
+    cursor: pointer;
+  }
 `;
 
-function Item({ order, title, onClick, handleCoinChange, index, capitalize }) {
+function Item({
+  order,
+  title,
+  onClick,
+  handleCoinChange,
+  index,
+  capitalize,
+  remove,
+}) {
   return (
     <>
       <ItemContainer>
+        <div onClick={remove}>
+          <img src={close} alt='remove item' />
+        </div>
         <div>
           <span>Name:</span>{' '}
           {order.name && <span> {capitalize(order.name)}</span>}
@@ -45,7 +66,7 @@ function Item({ order, title, onClick, handleCoinChange, index, capitalize }) {
       </ItemContainer>
 
       <button onClick={() => onClick()}>
-        {title === 'Received' ? 'Not Received' : 'Received'}
+        {title === 'received' ? 'Not Received' : 'Received'}
       </button>
     </>
   );

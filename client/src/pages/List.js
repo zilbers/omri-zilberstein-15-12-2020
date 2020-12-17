@@ -52,6 +52,15 @@ function List({
       });
   };
 
+  const remove = (index, setter, type) => {
+    setter((prev) => {
+      prev.splice(index, 1);
+      console.log(prev, index);
+      localStorage.setItem(type, JSON.stringify(prev));
+      return prev;
+    });
+  };
+
   useEffect(() => {
     if (orders.length === 0) {
       history.push('/');
@@ -82,6 +91,7 @@ function List({
             index={index}
             capitalize={capitalize}
             onClick={() => handleOrderState(setA, setB, orders[index], index)}
+            remove={() => remove(index, setA, title)}
           />
         </Card>
       ))}

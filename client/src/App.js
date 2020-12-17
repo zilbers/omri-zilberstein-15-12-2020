@@ -102,7 +102,7 @@ function App() {
               handleOrderState={handleOrderState}
               show={show}
               exchangeRates={exchangeRates}
-              title='On the way'
+              title='orders'
             />
           </Route>
           <Route exact path='/received'>
@@ -113,7 +113,7 @@ function App() {
               handleOrderState={handleOrderState}
               show={show}
               exchangeRates={exchangeRates}
-              title='Received'
+              title='received'
             />
           </Route>
           <Route exact path='/Statistics'>
