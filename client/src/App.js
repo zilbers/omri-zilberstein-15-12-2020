@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeContext } from './context/ThemeContext';
 import List from './pages/List';
 import Home from './pages/Home';
+import Statistics from './pages/Statistics';
 import Header from './components/AppBar';
 import Modal from './components/Modal';
 import Form from './components/Form';
@@ -108,6 +109,13 @@ function App() {
               exchangeRates={exchangeRates}
               remove={remove}
               title='received'
+            />
+          </Route>
+          <Route exact path='/Statistics'>
+            <Statistics
+              title='Statistics'
+              orders={orders}
+              received={received}
             />
           </Route>
           <Route path='/'>

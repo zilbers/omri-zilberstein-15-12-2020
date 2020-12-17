@@ -42,6 +42,13 @@ function Home({ orders, received, show, handleModal }) {
               onClick={() => history.push('/received')}
               disabled={received.length === 0 || show.form || show.settings}
             />
+            <Card
+              grow={1}
+              title='Statistics'
+              content='Get analytics of your orders'
+              onClick={() => history.push('/statistics')}
+              disabled={show.form || show.settings}
+            />
           </>
         ) : (
           <>
