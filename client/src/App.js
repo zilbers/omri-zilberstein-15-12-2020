@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ThemeContext } from './context/ThemeContext';
 import List from './pages/List';
 import Home from './pages/Home';
 import Header from './components/AppBar';
@@ -7,15 +8,22 @@ import Modal from './components/Modal';
 import Form from './components/Form';
 import Settings from './components/Settings';
 import bg from './assets/bg-image.jpg';
+import darkBg from './assets/dark-bg-image.jpg';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  background-image: url(${bg});
+  color: ${({ darkMode }) => (darkMode ? '#68d999' : `black`)};
+  background-image: ${({ darkMode }) =>
+    darkMode ? `url(${darkBg})` : `url(${bg})`};
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
 `;
 
 const Shadow = styled.div`
@@ -32,8 +40,9 @@ function App() {
   const [cooldown, setCooldown] = React.useState(10);
   const [error, setError] = React.useState(false);
   const [exchangeRates, setExchangeRates] = React.useState({});
-
   const [show, setShow] = React.useState({ settings: false, form: false });
+
+  const theme = React.useContext(ThemeContext);
 
   const handleModal = (prop) => {
     setShow((prev) => ({ ...prev, [prop]: !prev[prop] }));
@@ -42,9 +51,16 @@ function App() {
   const handleOrderState = (setA, setB, item, index) => {
     setA((prev) => {
       prev.splice(index, 1);
-      return prev;
+      return prev.slice();
     });
     setB((prev) => [...prev, item]);
+  };
+
+  const remove = (index, setter) => {
+    setter((prev) => {
+      prev.splice(index, 1);
+      return prev.slice();
+    });
   };
 
   React.useEffect(() => {
@@ -62,7 +78,7 @@ function App() {
 
   return (
     <Router>
-      <AppContainer>
+      <AppContainer darkMode={theme.darkMode}>
         {(show.form || show.settings) && <Shadow />}
         <Header
           length={orders.length + received.length}
@@ -78,7 +94,8 @@ function App() {
               handleOrderState={handleOrderState}
               show={show}
               exchangeRates={exchangeRates}
-              title='On the way'
+              remove={remove}
+              title='orders'
             />
           </Route>
           <Route exact path='/received'>
@@ -89,10 +106,11 @@ function App() {
               handleOrderState={handleOrderState}
               show={show}
               exchangeRates={exchangeRates}
-              title='Received'
+              remove={remove}
+              title='received'
             />
           </Route>
-          <Route exact path='/'>
+          <Route path='/'>
             <Home
               orders={orders}
               received={received}

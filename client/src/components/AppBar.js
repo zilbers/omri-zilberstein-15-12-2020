@@ -1,20 +1,23 @@
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ThemeContext } from '../context/ThemeContext';
 import addItem from '../assets/add-item.svg';
 import settings from '../assets/settings.svg';
 import styled from 'styled-components';
 
 const Container = styled.nav`
-  width: 96%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: ${({ url }) => (url === '/' ? 'none' : 'white')};
   background-repeat: 'no-repeat';
   background-size: 'cover';
-  padding: 0 2% 0 2%;
+  background: ${({ darkMode }) =>
+    darkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.3)'};
   a {
     text-decoration: none;
-    color: black;
+    color: ${({ darkMode }) => (darkMode ? '#68d999' : 'black')};
+    border-radius: 5px;
     transition: 0.3s ease-out;
   }
 `;
@@ -26,14 +29,16 @@ const List = styled.ul`
   list-style-type: none;
   img {
     width: 24px;
+    background: ${({ darkMode }) => (darkMode ? '#68d999' : 'none')};
+    border-radius: 5px;
+    padding: 1px;
   }
   img:hover {
     cursor: pointer;
     transform: scale(1.1);
   }
   .settings {
-    background: ${({ error }) => (error ? 'red' : 'none')};
-    border-radius: 5px;
+    ${({ error }) => error && `background: 'red'`};}
   }
 `;
 
@@ -44,15 +49,16 @@ const Header = styled.h2`
 `;
 
 function AppBar({ length, handleModal, error }) {
+  const theme = React.useContext(ThemeContext);
   const location = useLocation();
 
   return (
-    <Container url={location.pathname}>
+    <Container url={location.pathname} darkMode={theme.darkMode}>
       <Header>
         <Link to='/'>Shopping Tracking List</Link>
       </Header>
       {length > 0 && (
-        <List error={error}>
+        <List error={error} darkMode={theme.darkMode}>
           <img
             src={addItem}
             alt='add item'

@@ -5,21 +5,12 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   #price {
-    width: 46%;
+    width: 36%;
   }
   span {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-  }
-  label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  select {
-    text-align: center;
-    text-align-last: center;
   }
 `;
 
@@ -33,7 +24,10 @@ function Form({ setShow, setOrders }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOrders((prev) => [...prev, values]);
+    setOrders((prev) => {
+      const newOrders = [...prev, values];
+      return newOrders.slice();
+    });
     setShow((prev) => ({ ...prev, form: false }));
   };
 
@@ -42,7 +36,7 @@ function Form({ setShow, setOrders }) {
   };
   return (
     <FormContainer>
-      <h2>New Entree</h2>
+      <h2>New Entrie</h2>
       <form className='content' onSubmit={handleSubmit}>
         <label>
           Name:

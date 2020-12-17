@@ -34,6 +34,7 @@ function List({
   title,
   show,
   exchangeRates,
+  remove,
 }) {
   const history = useHistory();
   const [aggregatedValues, setAggregationValues] = useState([]);
@@ -73,18 +74,6 @@ function List({
   return (
     <ListContainer>
       <h1>{title}</h1>
-      {orders.map((order, index) => (
-        <Card grow={1} key={index} disabled={show.form || show.settings}>
-          <Item
-            title={title}
-            order={order}
-            handleCoinChange={handleCoinChange}
-            index={index}
-            capitalize={capitalize}
-            onClick={() => handleOrderState(setA, setB, orders[index], index)}
-          />
-        </Card>
-      ))}
       <Card grow={1} disabled={show.form || show.settings}>
         <h3>{title} by store</h3>
         <AggregatedValuesContainer>
@@ -100,6 +89,19 @@ function List({
           ))}
         </AggregatedValuesContainer>
       </Card>
+      {orders.map((order, index) => (
+        <Card grow={1} key={index} disabled={show.form || show.settings}>
+          <Item
+            title={title}
+            order={order}
+            handleCoinChange={handleCoinChange}
+            index={index}
+            capitalize={capitalize}
+            onClick={() => handleOrderState(setA, setB, orders[index], index)}
+            remove={() => remove(index, setA, title)}
+          />
+        </Card>
+      ))}
     </ListContainer>
   );
 }
