@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeContext } from './context/ThemeContext';
 import List from './pages/List';
 import Home from './pages/Home';
-import Statistics from './pages/Statistics';
 import Header from './components/AppBar';
 import Modal from './components/Modal';
 import Form from './components/Form';
@@ -52,9 +51,16 @@ function App() {
   const handleOrderState = (setA, setB, item, index) => {
     setA((prev) => {
       prev.splice(index, 1);
-      return prev;
+      return prev.slice();
     });
     setB((prev) => [...prev, item]);
+  };
+
+  const remove = (index, setter) => {
+    setter((prev) => {
+      prev.splice(index, 1);
+      return prev.slice();
+    });
   };
 
   React.useEffect(() => {
@@ -69,20 +75,6 @@ function App() {
     }, 1000 * cooldown);
     return () => clearInterval(interval);
   }, [cooldown]);
-
-  React.useEffect(() => {
-    if (orders.length > 0 || received.length) {
-      localStorage.setItem('orders', JSON.stringify(orders));
-      localStorage.setItem('received', JSON.stringify(received));
-    }
-  }, [orders.length, received.length]);
-
-  React.useEffect(() => {
-    const storedOrders = localStorage.getItem('orders');
-    const storedReceived = localStorage.getItem('received');
-    if (storedOrders) setOrders(JSON.parse(storedOrders));
-    if (storedReceived) setReceived(JSON.parse(storedReceived));
-  }, []);
 
   return (
     <Router>
@@ -102,6 +94,7 @@ function App() {
               handleOrderState={handleOrderState}
               show={show}
               exchangeRates={exchangeRates}
+              remove={remove}
               title='orders'
             />
           </Route>
@@ -113,14 +106,8 @@ function App() {
               handleOrderState={handleOrderState}
               show={show}
               exchangeRates={exchangeRates}
+              remove={remove}
               title='received'
-            />
-          </Route>
-          <Route exact path='/Statistics'>
-            <Statistics
-              title='Statistics'
-              orders={orders}
-              received={received}
             />
           </Route>
           <Route path='/'>

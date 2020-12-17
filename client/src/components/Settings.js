@@ -56,7 +56,7 @@ function Settings({ cooldown, setCooldown, setShow, error }) {
         <div className='actions'>
           <button onClick={handleTheme}>Change Theme</button>
           <button type='submit' value='Submit'>
-            Submit
+            Save
           </button>
         </div>
       </form>

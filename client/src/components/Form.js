@@ -26,8 +26,7 @@ function Form({ setShow, setOrders }) {
     e.preventDefault();
     setOrders((prev) => {
       const newOrders = [...prev, values];
-      localStorage.setItem('orders', JSON.stringify(newOrders));
-      return newOrders;
+      return newOrders.slice();
     });
     setShow((prev) => ({ ...prev, form: false }));
   };

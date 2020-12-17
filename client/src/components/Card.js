@@ -54,6 +54,13 @@ const CardContainer = styled.div`
   select:hover {
     cursor: pointer;
   }
+  h3 {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #ccc;
+    padding: 1rem;
+    margin: 0;
+  }
 `;
 
 function Card({ title, content, grow, onClick, children, disabled }) {
